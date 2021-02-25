@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "theses",
+  "info": {
+    "name": "thesis",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "body": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.section",
+        "sections.anchor",
+        "sections.anchor-look"
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "edits",
+  "info": {
+    "name": "edit",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "original": {
+      "via": "edits",
+      "model": "original"
+    },
+    "title": {
+      "type": "string",
+      "private": false,
+      "required": false
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    }
+  }
+}

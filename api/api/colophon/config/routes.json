@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/colophon",
+      "handler": "colophon.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/colophon",
+      "handler": "colophon.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/colophon",
+      "handler": "colophon.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

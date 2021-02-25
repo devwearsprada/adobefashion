@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_anchor_looks",
+  "info": {
+    "name": "Anchor Look",
+    "icon": "code-branch"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "image": {
+      "model": "original"
+    }
+  }
+}

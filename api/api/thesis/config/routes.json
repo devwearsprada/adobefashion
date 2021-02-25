@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/thesis",
+      "handler": "thesis.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/thesis",
+      "handler": "thesis.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/thesis",
+      "handler": "thesis.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

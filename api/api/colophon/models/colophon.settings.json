@@ -1,0 +1,24 @@
+{
+  "kind": "singleType",
+  "collectionName": "colophons",
+  "info": {
+    "name": "Colophon",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "logo": {
+      "type": "component",
+      "repeatable": true,
+      "component": "logo.logo-s"
+    }
+  }
+}

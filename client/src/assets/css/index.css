@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: NeueMachina;
+    font-weight: normal;
+    src: url('../fonts/NeueMachina-Regular.woff') format("woff");
+  }
+
+  @font-face {
+    font-family: SwissBlack;
+    font-weight: normal;
+    src: url('../fonts/Swiss721BT-BlackNo2.woff') format("woff");
+  }
+
+  @font-face {
+    font-family: Hadogenes;
+    font-weight: normal;
+    src: url('../fonts/Hadogenes-Regular.woff') format("woff");
+  }
+
+  @font-face {
+    font-family: Beaufort;
+    font-weight: normal;
+    src: url('../fonts/Beaufort-Regular.woff') format("woff");
+  }
+
+  body {
+    @apply bg-primary font-neue-machina text-xl;
+  }
+
+  h1 {
+    @apply font-swiss-black;
+  }
+
+  strong {
+    @apply font-normal text-secondary;
+  }
+
+  article p {
+    @apply py-5;
+  }
+
+  div.container section:first-child article {
+    @apply text-2xl text-secondary;
+  }
+
+  div.container section:first-child article p:first-of-type {
+    @apply pt-0;
+  }
+
+  div.container section:first-child aside h1 {
+    @apply hidden;
+  }
+
+  div.container section:first-child article h4 {
+    @apply font-beaufort-regular text-lg text-black leading-4;
+  }
+
+  div.container section:first-child article h2 {
+    @apply font-swiss-black text-4xl;
+  }
+}
