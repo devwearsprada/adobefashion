@@ -2,7 +2,7 @@ name: Vue
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -23,4 +23,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm i
-    - run: npm run build
+    - run: npm run build --if-present
