@@ -18,9 +18,14 @@ jobs:
         node-version: [14.x]
 
     steps:
-    # - name: Copy uploads folder
-    #   run: |
-    #     cp -r public/uploads /home/ubuntu/adobefashion/
+    - name: Moving the uploads folder
+      run: |
+        if [[ -d public/uploads ]]
+        then
+          cp -r public/uploads/ ../../../../uploads/
+        else
+          echo "No uploads folder present"
+        fi
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -28,7 +33,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm i
     - run: NODE_ENV=production NODE_OPTIONS=--max_old_space_size=8192 npm run build --if-present
-    # - name: Copy back uploads folder
-    #   run: |
-    #     cp -a /home/ubuntu/adobefashion/uploads/. public/uploads/
-    # - run: NODE_ENV=production /home/boris/.nvm/versions/node/v14.15.1/bin/pm2 restart strandbeestAPI
+    - name: Moving back the uploads folder
+      run: |
+        if [[ -d ../../../../uploads/ ]]
+        then
+          cp -r ../../../../uploads/* public/uploads/
+        else
+          echo "No uploads folder present"
+        fi
+    - run: NODE_ENV=production pm2 start ecosystem.config.js

@@ -510,6 +510,7 @@ export default {
       const canvas = this.$refs['2dcanvas']
       // set up mouse events on the canvas object
       canvas.onmousedown = (e) => {
+        e.preventDefault()
         this.stop = false
         this.move = this.newMove(this.getMousePoint(e))
       }
@@ -519,23 +520,27 @@ export default {
         this.move = this.newMove(this.getMousePoint(e))
       }
 
-      canvas.onmouseup = () => {
+      canvas.onmouseup = (e) => {
+        e.preventDefault()
         this.move = undefined
         this.render()
       }
 
-      canvas.ontouchend = () => {
+      canvas.ontouchend = (e) => {
+        e.preventDefault()
         this.move = undefined
         this.render()
       }
 
-      window.onmouseup = () => {
+      window.onmouseup = (e) => {
+        e.preventDefault()
         this.stop = true
         this.move = undefined
         this.render()
       }
 
-      window.ontouchend = () => {
+      window.ontouchend = (e) => {
+        e.preventDefault()
         this.stop = true
         this.move = undefined
         this.render()

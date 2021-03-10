@@ -5,9 +5,9 @@
     :data-id="data.image.id"
     :id="data.slug"
   >
-    <sanitize
+    <article
       class="order-2 md:order-none md:col-span-2" 
-      :html="data.content"
+      v-html="data.content"
     />
     <aside
       class="order-1 md:order-none md:col-span-1"
@@ -24,7 +24,6 @@ export default {
   props: ['data'],
   name: 'ParagraphSection',
   components: {
-    Sanitize: () => import(/* webpackChunkName: "Sanitize" */ '@/components/SanitizeHTML.vue'),
     HadogenesTitle: () => import(/* webpackChunkName: "Title" */ '@/components/HadogenesTitle.vue')
   },
   mounted() {

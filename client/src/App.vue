@@ -1,32 +1,36 @@
 <template>
   <div id="adobefashion">
+    <template v-if="preloader">
     <transition-fade>
       <preloader
         v-if="preloader"
       />
     </transition-fade>
-    <transition-fade>
-      <blur-overlay
-        v-if="blurMenu || inView && blurEditor"
+    </template>
+    <template v-else>
+      <transition-fade>
+        <blur-overlay
+          v-if="blurMenu || inView && blurEditor"
+        />
+      </transition-fade>
+      <navigation
+        @menuOpen="toggleBlur"
       />
-    </transition-fade>
-    <navigation
-      @menuOpen="toggleBlur"
-    />
-    <router-view
-      class="container px-3 pt-6 pb-10 md:pt-16 md:pb-20 md:px-0"
-      @scrollToTop="scrollToTop"
-    />
-    <archive-section/>
-    <transition-expand>
-      <image-editor
-        v-if="inView"
-        @editorOpen="toggleBlur"
+      <router-view
+        class="container px-3 pt-6 pb-10 md:pt-16 md:pb-20 md:px-0"
+        @scrollToTop="scrollToTop"
       />
-    </transition-expand>
-    <scroll-to-top
-      v-if="scrollToTopEnabled"
-    />
+      <archive-section/>
+      <transition-expand>
+        <image-editor
+          v-if="inView"
+          @editorOpen="toggleBlur"
+        />
+      </transition-expand>
+      <scroll-to-top
+        v-if="scrollToTopEnabled"
+      />
+    </template>
   </div>
 </template>
 
