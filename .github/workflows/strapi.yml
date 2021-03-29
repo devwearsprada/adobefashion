@@ -1,17 +1,12 @@
-name: Strapi
+name: Deploy
 
 on:
   push:
     branches: [ main ]
 
-jobs:
+jobs: 
   build:
-
     runs-on: self-hosted
-    
-    defaults:
-      run:
-        working-directory: ./api
 
     strategy:
       matrix:
@@ -22,22 +17,22 @@ jobs:
       run: |
         if [[ -d public/uploads ]]
         then
-          cp -r public/uploads/ ../../../../uploads/
+          cp -r public/uploads/ ../../../../
         else
           echo "No uploads folder present"
         fi
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
-      with:
+      with: 
         node-version: ${{ matrix.node-version }}
     - run: npm i
-    - run: NODE_ENV=production NODE_OPTIONS=--max_old_space_size=8192 npm run build --if-present
+    - run: NODE_ENV=production npm run build --if-present
     - name: Moving back the uploads folder
       run: |
         if [[ -d ../../../../uploads/ ]]
         then
-          cp -r ../../../../uploads/* public/uploads/
+          cp -a ../../../../uploads/. public/uploads/
         else
           echo "No uploads folder present"
         fi
