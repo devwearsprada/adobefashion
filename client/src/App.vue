@@ -1,36 +1,26 @@
 <template>
   <div id="adobefashion">
-    <template v-if="preloader">
-    <transition-fade>
-      <preloader
-        v-if="preloader"
+    <!-- <transition-fade>
+      <blur-overlay
+        @click.native="blurEditor = false"
+        v-if="blurMenu || inView && blurEditor"
       />
-    </transition-fade>
-    </template>
-    <template v-else>
-      <transition-fade>
-        <blur-overlay
-          v-if="blurMenu || inView && blurEditor"
-        />
-      </transition-fade>
-      <navigation
-        @menuOpen="toggleBlur"
-      />
+    </transition-fade> -->
+    <navigation
+      @menuOpen="toggleBlur"
+    />
+    <transition-view>
       <router-view
-        class="container px-3 pt-6 pb-10 md:pt-16 md:pb-20 md:px-0"
-        @scrollToTop="scrollToTop"
+        class="container pb-10 md:pb-20"
       />
-      <archive-section/>
-      <transition-expand>
-        <image-editor
-          v-if="inView"
-          @editorOpen="toggleBlur"
-        />
-      </transition-expand>
-      <scroll-to-top
-        v-if="scrollToTopEnabled"
+    </transition-view>
+    <transition-image-editor>
+      <image-editor
+        v-if="inView && $route.name === 'Thesis'"
+        :editorOpen="blurEditor"
+        @editorOpen="toggleBlur"
       />
-    </template>
+    </transition-image-editor>
   </div>
 </template>
 
@@ -39,29 +29,36 @@ export default {
   name: 'App',
   metaInfo: {
     titleTemplate: (titleChunk) => {
-      return titleChunk ? `${titleChunk} - Adobefashion` : 'Adobefashion';
+      return titleChunk 
+        ? `${titleChunk} - Adobefashion` 
+        : 'Adobefashion'
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'initial-scale=1, user-scalable=no, width=device-width, height=device-height, viewport-fit=cover' }
+      { 
+        charset: 'utf-8' 
+      },
+      { 
+        name: 'viewport', 
+        content: 'initial-scale=1, user-scalable=no, width=device-width, height=device-height, viewport-fit=cover'
+      }
     ]
   },
   components: {
-    Preloader: () => import(/* webpackChunkName: "Preloader" */ '@/components/Preloader.vue'),
-    BlurOverlay: () => import(/* webpackChunkName: "Sections" */ '@/components/BlurOverlay.vue'),
+    // Preloader: () => import(/* webpackChunkName: "Preloader" */ '@/components/Preloader.vue'),
+    // BlurOverlay: () => import(/* webpackChunkName: "Sections" */ '@/components/BlurOverlay.vue'),
     Navigation: () => import(/* webpackChunkName: "Navigation" */ '@/components/Navigation.vue'),
-    ArchiveSection: () => import(/* webpackChunkName: "Sections" */ '@/components/sections/ArchiveSection.vue'),
-    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionFade.vue'),
-    TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionExpand.vue'),
+    // ArchiveSection: () => import(/* webpackChunkName: "Sections" */ '@/components/sections/ArchiveSection.vue'),
+    // TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionFade.vue'),
+    TransitionView: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionView.vue'),
+    // TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionExpand.vue'),
+    TransitionImageEditor: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionImageEditor.vue'),
     ImageEditor: () => import(/* webpackChunkName: "ImageEditor" */ '@/components/ImageEditor.vue'),
-    scrollToTop: () => import(/* webpackChunkName: "ScrollToTop" */ '@/components/ScrollToTop.vue')
   },
   data() {
     return {
       blurMenu: false,
       blurEditor: false,
       scrollToTopEnabled: false,
-      preloader: true
     }
   },
   created() {
@@ -69,28 +66,25 @@ export default {
     this.$store.dispatch('fetchThesis')
     // Get originals
     this.$store.dispatch('fetchOriginals')
-    // Get edits
-    this.$store.dispatch('fetchEdits')
-    this.$store.dispatch('fetchEditsCount')
     // Get colophon
     this.$store.dispatch('fetchColophon')
   },
-  watch: {
-    loaded() {
-      if (this.loaded) {
-        setTimeout(() => {
-          this.preloader = false
-        }, 1000)
-      }
-    }
-  },
   computed: {
+    slideAnimation() {
+      if (this.previousView === null) return true
+      if (this.inView === null) return true 
+
+      return false
+    },
     loaded() {
       return this.$store.getters.loaded
     },
     inView() {
       return this.$store.getters.inView
     },
+    previousView() {
+      return this.$store.getters.previousView
+    }
   },
   methods: {
     toggleBlur(payload) {
@@ -99,9 +93,6 @@ export default {
 
       this[data] = value
     },
-    scrollToTop(payload) {
-      this.scrollToTopEnabled = payload
-    }
   }
 }
 </script>

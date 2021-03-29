@@ -71,7 +71,7 @@ export default {
 
 .expand-enter-active,
 .expand-leave-active {
-  transition: height .25s ease-in-out;
+  transition: height .30s cubic-bezier(0.32, 0.0, 0.68, 1.0);
   overflow: hidden;
 }
 

@@ -1,16 +1,16 @@
 <template>
   <section 
     ref="section"
-    class="grid md:grid-cols-3 md:gap-10"
+    class="grid lg:grid-cols-3 lg:gap-10"
     :data-id="data.image.id"
     :id="data.slug"
   >
     <article
-      class="order-2 md:order-none md:col-span-2" 
+      class="order-2 lg:order-none lg:col-span-2" 
       v-html="data.content"
     />
     <aside
-      class="order-1 md:order-none md:col-span-1"
+      class="order-1 lg:order-none lg:col-span-1"
     >
       <hadogenes-title>
         {{ data.title }}

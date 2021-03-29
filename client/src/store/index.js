@@ -15,6 +15,8 @@ export default new Vuex.Store({
     totalEdits: 0,
     editsCount: 0,
     inView: null,
+    previousView: null,
+    typeId: false
   },
   mutations: {
     setThesis(state, thesis) {
@@ -32,15 +34,30 @@ export default new Vuex.Store({
     setTotalEdits(state, number) {
       state.totalEdits = number
     },
+    clearEdits(state) {
+      state.totalEdits = 0
+      state.editsCount = 0
+      state.edits = []
+    },
     setColophon(state, colophon) {
       state.colophon = colophon
     },
     setInView(state, original) {
       state.inView = original
+    },
+    setPreviousView(state, original) {
+      state.previousView = original
+    },
+    setTypeId(state, id) {
+      let type = (id)
+        ? id
+        : false
+
+      state.typeId = type
     }
   },
   actions: {
-    fetchThesis({commit}) {
+    fetchThesis({ commit }) {
       api.getThesis((thesis, error) => {
         if (error) {
           throw error
@@ -56,34 +73,42 @@ export default new Vuex.Store({
         commit('setOriginals', originals)
       })
     },
-    fetchEdits({ commit, state}, $state) {
-      axios.get(`${process.env.VUE_APP_API_URL}/edits?_limit=10&_start=${state.editsCount}`)
-        .then(response => {
-          commit('pushEdits', response.data)
-          commit('addEditsCount', 10)
+    fetchEditsNew({ commit, state }, $state) {
+      let id = state.typeId
 
-          if (state.edits.length === state.totalEdits && state.edits.length !== 0) {
-            $state.complete()
+      let count = (id)
+      ? `${process.env.VUE_APP_API_URL}/edits/count?original.id=${id}`
+      : `${process.env.VUE_APP_API_URL}/edits/count`
+      
+      let url = (id) 
+        ? `${process.env.VUE_APP_API_URL}/edits?original.id=${id}&_limit=10&_start=${state.editsCount}`
+        : `${process.env.VUE_APP_API_URL}/edits?_limit=10&_start=${state.editsCount}`    
+
+
+      console.log(url);
+      
+      axios.get(count)
+      .then(response => {
+        // set total edit count
+        commit('setTotalEdits', response.data)
+        axios.get(url)
+        .then(response => {
+          // check if all items are fetched
+          if (state.editsCount < state.totalEdits) {
+            commit('pushEdits', response.data)
+            commit('addEditsCount', response.data.length)
+            $state.loaded()
           } else {
-            if ($state !== undefined) {
-              $state.loaded()
-            }
+            // all items are fetched
+            $state.complete()
           }
         })
-        .catch(error => {
-          console.log(error);
-        })
+      })
+      .catch(error => {
+        console.log(error);
+      })
     },
-    fetchEditsCount({commit}) {
-      axios.get(`${process.env.VUE_APP_API_URL}/edits/count`)
-        .then(response => {
-          commit('setTotalEdits', response.data)
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    },
-    fetchColophon({commit}) {
+    fetchColophon({ commit }) {
       api.getColophon((colophon, error) => {
         if (error) {
           throw error
@@ -93,6 +118,7 @@ export default new Vuex.Store({
     },
     calculateInView({ commit, state }, id) {
       let inView
+     
       if (id) {
         inView = state.originals.filter(original => {
           return original.id === id
@@ -101,6 +127,7 @@ export default new Vuex.Store({
         inView = null
       }
 
+      commit('setPreviousView', state.inView)
       commit('setInView', inView)
     }
   },
@@ -128,6 +155,9 @@ export default new Vuex.Store({
     },
     inView(state) {
       return state.inView
+    },
+    previousView(state) {
+      return state.previousView
     },
     menuItems(state) {
       return state.thesis.body.filter(anchor => {

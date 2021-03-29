@@ -1,40 +1,106 @@
 <template>
-<div class="shadow-secondary fixed bottom-0 right-0 safe-bottom md:right-14 md:w-6/12 lg:w-4/12 w-full bg-secondary">
-  <div 
-    class="test"
+  <div
+    class="fixed bottom-0 right-0 cursor-pointer w-full md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-lg xl:w-4/12 xl:max-w-2xl p-4"
+    @click="editorVisible = true"
   >
-    <transition-expand> 
-      <div v-show="editorVisible">
-        <div class="grid grid-cols-1 grid-rows-1" v-show="!startEdit">
-          <img class="col-span-1 col-start-1 row-start-1" :src="api + original.image.url"/>
-          <button @click="startEdit = true" class="z-10 focus:outline-none col-span-1 col-start-1 row-start-1 bg-gradient-to-t from-secondary to-transparent h-full w-full">
-            Click/tap to edit
+    <div 
+      class="rounded-2xl shadow-secondary"
+    >
+      <div class="relative h-4 rounded-t-full bg-secondary">
+        <div class="absolute flex justify-center items-center border-black border bg-primary right-5 -mt-5 rounded-full w-8 h-8">?</div>
+      </div>
+      <div class="bg-secondary">
+        <transition-expand>
+          <div
+            v-show="editorVisible"
+          >
+            <div
+              v-show="intro"
+              @click="intro = false"
+              class="relative"
+            >
+              <div
+                class="absolute flex justify-center items-center w-full h-full bg-secondary bg-opacity-40 z-10"
+              >
+                Click to start editing
+              </div>
+              <image-lazy
+                class="rounded-xl"
+                :key="original.id"
+                :backgroundColor="'#e4fd41'"
+                :width="original.image.width"
+                :height="original.image.height"
+                :src="api + original.image.formats.small.url"
+                :lazy-src="(original.image.formats.medium) 
+                            ? api + original.image.formats.medium.url 
+                            : api + original.image.formats.small.url"
+                :lazy-srcset="api + original.image.url"
+              />
+            </div>
+            <div
+              class="absolute w-full h-full bg-secondary flex justify-center items-center"
+              v-if="saving && !intro"
+            >
+              Your look has been published to the archive
+            </div>
+            <div v-show="!intro">
+              <warp 
+                :key="original._id"
+                :image="api + original.item.url" 
+                :saveEdit="save" 
+                :resetEdit="reset"
+                @reset="reset = false"
+                @save="save = false"
+              />
+            </div>
+            <!-- <transition-fade>
+              <div
+                class="absolute w-full h-full bg-secondary flex justify-center items-center"
+                v-if="saving"
+              >
+                Your look has been published to the archive
+              </div>
+            </transition-fade> -->
+            <!-- <warp 
+              v-show="startEdit"
+              :key="original._id"
+              :image="api + original.item.url" 
+              :saveEdit="save" 
+              :resetEdit="reset"
+              @reset="reset = false"
+              @save="save = false"
+            /> -->
+          </div>
+        </transition-expand>
+        <div class="grid grid-cols-4">
+          <button>
+            Click
+          </button>
+          <h1 class="font-hadogenes-regular text-2xl lg:text-3xl uppercase text-center col-start-2 col-span-2">
+            {{ original.title }}
+          </h1>
+          <button>
+            Save
           </button>
         </div>
-        <warp 
-          v-show="startEdit"
-          :key="original._id"
-          :image="api + original.item.url" 
-          :saveEdit="save" 
-          :resetEdit="reset"
-          @reset="reset = false"
-          @save="save = false"
-        />
       </div>
-    </transition-expand>
-    <div class="grid grid-cols-3 p-2" @click="editorVisible = !editorVisible">
-      <button class="text-left focus:outline-none" v-show="editorVisible" @click.stop="save = true">Save</button>
-      <div class="font-hadogenes-regular text-center text-3xl uppercase col-start-2 whitespace-nowrap">{{ original.title }}</div>
-      <button class="text-right focus:outline-none" v-show="editorVisible" @click.stop="reset = true">Reset</button>
+      <div class="h-4 rounded-b-full bg-secondary"/>
     </div>
-  </div>
-  </div>
+  </div> 
 </template>
 
 <script>
 export default {
   name: 'ImageEditor',
+  props: {
+    editorOpen: {
+      type: Boolean,
+      required: true,
+    }
+  },
   components: {
+    ImageLazy: () => import('@/components/image-lazy.vue'),
+    // TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionFade.vue'),
     TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionExpand.vue'),
     Warp: () => import(/* webpackChunkName: "Warp" */ '@/components/Warp.vue')
   },
@@ -42,52 +108,26 @@ export default {
     return {
       api: process.env.VUE_APP_API_URL,
       editorVisible: false,
-      startEdit: false,
+      startEdit: true,
+      intro: true,
       reset: false,
-      save: false
+      saving: true,
+      save: false,
     }
   },
-  created() {
-    this.$emit('editorOpen', ['blurEditor', false])
-  },
   watch: {
-    editorVisible() {
-      if (this.editorVisible) {
-        this.$emit('editorOpen', ['blurEditor', true])
-      } else {
-        this.$emit('editorOpen', ['blurEditor', false])
-        setTimeout(() => {
-          this.startEdit = false
-        }, 250)
-      }
+    original() {
+      this.intro = true
+      console.log('new');
     }
   },
   computed: {
     original() {
       return this.$store.getters.inView
+    },
+    previousView() {
+      return this.$store.getters.previousView
     }
   },
 }
 </script>
-
-<style>
-@-webkit-keyframes Pulse {
-	0% { -webkit-box-shadow: 0 0 2rem rgba(228, 253, 65, .8) }
-	50% { -webkit-box-shadow: 0 0 2rem rgba(228, 253, 65, 1) }
-	100% { -webkit-box-shadow: 0 0 2rem rgba(228, 253, 65, .8) }
-}
-
-@keyframes Pulse {
-	0% { box-shadow: 0 0 2rem rgba(228, 253, 65, .8) }
-	50% { box-shadow: 0 0 2rem rgba(228, 253, 65, 1) }
-	100% { box-shadow: 0 0 2rem rgba(228, 253, 65, .8) }
-}
-
-.test {
-  -webkit-animation: Pulse 3s infinite ease-in-out;
-  -o-animation: Pulse 3s infinite ease-in-out;
-  -ms-animation: Pulse 3s infinite ease-in-out; 
-  -moz-animation: Pulse 3s infinite ease-in-out; 
-  animation: Pulse 3s infinite ease-in-out;
-}
-</style>

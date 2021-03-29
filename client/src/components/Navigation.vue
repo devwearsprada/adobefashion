@@ -1,46 +1,37 @@
 <template>
-  <nav 
-    :class="[
-      'fixed top-0 p-3 md:bg-transparent rounded-full'
-    ]"
-  >
-    <ul>
-      <li 
-        @click="active = !active"
+  <nav class="sticky top-0 flex p-4 space-x-4 w-full">
+    <div 
+      :class="shadowClass"
+      class="rounded-xl transition-all w-1/12 min-w-max"
+    >
+      <div 
+        class="h-2 rounded-t-full transition-colors duration-300 ease-in-out"
+        :class="bgClass"
+      />
+      <router-link 
+        :to="{ name: buttonText }"
+        custom
+        v-slot="{ navigate }"
       >
-        <span
-          class="cursor-pointer"
+        <button
+          class="transition-colors duration-300 ease-in-out px-4 w-full"
+          :class="bgClass"
+          @click="navigate"
+          role="link"
         >
-          Chapters
-        </span>
-        <transition-expand>
-          <ul 
-            class="pl-5" 
-            v-if="active"
-          >
-            <li 
-              v-for="(item, index) in menuItems" 
-              :key="index"
-              class="ml-0 hover:ml-2 transform duration-100"
-            >
-              <router-link 
-                :to="{ hash: item.slug }"
-              >
-                {{ item.title }}
-              </router-link>
-            </li>
-          </ul>
-        </transition-expand>
-      </li>
-      <li>
-        <router-link
-          @click.native="active = false"
-          :to="{ hash: '#archive' }"
-        >
-          Archive
-        </router-link>
-      </li>
-    </ul>
+          {{ buttonText }}
+        </button>
+      </router-link>
+      <div 
+        class="h-2 rounded-b-full transition-colors duration-300 ease-in-out"
+        :class="bgClass"
+      />
+    </div>
+    <transition-fade>
+      <filter-menu
+        v-if="$route.name === 'Archive'"
+      />
+    </transition-fade>
   </nav>
 </template>
 
@@ -50,7 +41,8 @@ import breakpoints from '@/plugins/breakpoints'
 export default {
   name: 'Navigation',
   components: {
-    TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionExpand.vue')
+    FilterMenu: () => import('@/components/FilterMenu.vue'),
+    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionFade.vue')
   },
   data() {
     return {
@@ -73,6 +65,19 @@ export default {
     },
     menuItems() {
       return this.$store.getters.menuItems
+    },
+    bgClass() { 
+      return (this.buttonText === 'Thesis') ? 'bg-primary' : 'bg-secondary'
+    },
+    shadowClass() {
+      return (this.buttonText === 'Thesis') ? 'shadow-primary' : 'shadow-secondary'
+    },
+    buttonText() {
+      if (this.$route.name === 'Thesis') {
+        return 'Archive'
+      } else {
+        return 'Thesis'
+      }
     }
   }
 }

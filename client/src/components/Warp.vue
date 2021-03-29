@@ -65,6 +65,7 @@ export default {
     },
     saveEdit() {
       if (this.saveEdit) {
+        console.log('yo');
         const canvas = this.$refs.webglcanvas
 
         canvas.toBlob((blob) => {
@@ -348,51 +349,53 @@ export default {
     },
     imageToTexture(image) {
       const canvas = this.$refs['2dcanvas']
-      const ctx = canvas.getContext('2d')
-      const canvWidth = canvas.width 
-      const canvHeight = canvas.height
-      const imgWidth = image.width
-      const imgHeight = image.height
+      if (canvas) {
+        const ctx = canvas.getContext('2d')
+        const canvWidth = canvas.width 
+        const canvHeight = canvas.height
+        const imgWidth = image.width
+        const imgHeight = image.height
 
-      // calculate image ratio
-      const hRatio = canvWidth / imgWidth,
-      vRatio = canvHeight / imgHeight
+        // calculate image ratio
+        const hRatio = canvWidth / imgWidth,
+        vRatio = canvHeight / imgHeight
 
-      const ratio = Math.min(hRatio, vRatio)
+        const ratio = Math.min(hRatio, vRatio)
 
-      // calculate x, y to center image
-      const centerShift_x = (canvWidth - imgWidth * ratio) / 2,
-      centerShift_y = (canvHeight - imgHeight * ratio) / 2
+        // calculate x, y to center image
+        const centerShift_x = (canvWidth - imgWidth * ratio) / 2,
+        centerShift_y = (canvHeight - imgHeight * ratio) / 2
 
-      // put the image on the canvas
-      ctx.drawImage(image, 0, 0, imgWidth, imgHeight,
-        centerShift_x, centerShift_y, imgWidth * ratio, imgHeight * ratio
-      )
+        // put the image on the canvas
+        ctx.drawImage(image, 0, 0, imgWidth, imgHeight,
+          centerShift_x, centerShift_y, imgWidth * ratio, imgHeight * ratio
+        )
 
-      // TODO: check if this works without extra gl variable
-      let gl = this.gl
+        // TODO: check if this works without extra gl variable
+        let gl = this.gl
 
-      // create texture object that will contain the image
-      const texture = gl.createTexture()
+        // create texture object that will contain the image
+        const texture = gl.createTexture()
 
-      // bind the texture the target (TEXTURE_2D) of the active texture unit
-      gl.bindTexture(gl.TEXTURE_2D, texture)
+        // bind the texture the target (TEXTURE_2D) of the active texture unit
+        gl.bindTexture(gl.TEXTURE_2D, texture)
 
-      // flip the image y axis to match the WEBGL texture coordinate space
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
+        // flip the image y axis to match the WEBGL texture coordinate space
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
 
-      // set the parameters so we can render any image size
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+        // set the parameters so we can render any image size
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
 
-      // upload the resized canvas image into the texture
-      // note: a canvas is used here but can be replaced bu image object
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas)
-      ctx.clearRect(0, 0, canvWidth, canvHeight)
+        // upload the resized canvas image into the texture
+        // note: a canvas is used here but can be replaced bu image object
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas)
+        ctx.clearRect(0, 0, canvWidth, canvHeight)
 
-      this.reset()
+        this.reset()
+      }
     },
     reset() {
       this.moves = []

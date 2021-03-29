@@ -1,7 +1,7 @@
 <template>
   <transition 
-    name="fade"
-    mode="out-in"
+    name="view"
+    :mode="mode"
   >
     <slot/>
   </transition>
@@ -9,21 +9,21 @@
 
 <script>
 export default {
-  name: 'TransitionFade',
+  name: 'TransitionView',
   props: {
     mode: {
       type: String,
-      default: ''
+      default: 'out-in'
     }
   }
 }
 </script>
 
 <style scoped>
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
+  .view-enter-active, .view-leave-active {
+    transition: opacity .2s;
   }
-  .fade-enter, .fade-leave-to {
+  .view-enter, .view-leave-to {
     opacity: 0;
   }
 </style>

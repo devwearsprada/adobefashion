@@ -9,6 +9,9 @@ module.exports = {
   theme: {
     container: {
       center: true,
+      padding: {
+        DEFAULT: '1rem',
+      },
       screens: {
         'sm': '640px',  
         'md': '768px',
@@ -16,11 +19,35 @@ module.exports = {
         'xl': '1280px'
       },
     },
+    animation: {
+      'bounce': 'bounce 1s 3',
+    },
+    keyframes: {
+      bounce: {
+        '0%, 100%': { 
+          transform: 'translateY(0)',
+          animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)'
+        },
+        '50%': {
+          transform: 'translateY(-8%)',
+          animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)'
+        }
+      }
+    },
     backdropFilter: {
       'none': 'none',
       'blur': 'blur(8px)',
     },
     extend: {
+      animation: {
+        'scale': 'scale 1s 3'
+      },
+      keyframes: {
+        scale: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': {transform: 'scale(1.01)' }
+        }
+      },
       fontFamily: {
         'neue-machina': ['NeueMachina', 'sans-serif'],
         'swiss-black': ['SwissBlack', 'sans-serif'],
@@ -32,12 +59,15 @@ module.exports = {
         secondary: '#e4fd41'
       },
       boxShadow: {
+        primary: '0px 0px .25rem .25rem rgba(188, 191, 212, 1)',
         secondary: '0px 0px .25rem .25rem rgba(228, 253, 65, 1)',
         'secondary-large': '0px 0px 2rem 2rem rgba(228, 253, 65, 1)',
+        black: '0px 0px .5rem .25rem rgba(0, 0, 0, .2)'
       },
     },
   },
   variants: {
+    animation: ['responsive', 'motion-safe', 'motion-reduce'],
     mixBlendMode: ['responsive'],
     backgroundBlendMode: ['responsive'],
     isolation: ['responsive'],

@@ -8,14 +8,14 @@
       <div class="col-span-2">
         <ul class="sticky top-0 z-10 py-3 flex text-base justify-between md:justify-start md:text-xl bg-secondary">
           <li
-            class="md:pr-3"
+            class="md:pr-3 cursor-pointer"
             @click="selectedFilter = null"
             v-scroll-to="{ el: '#archive', lazy: true }"
           >
             All
           </li>
           <li
-            class="md:px-3" 
+            class="md:px-3 cursor-pointer" 
             v-for="(original, index) in originals"
             :key="index"
             @click="selectedFilter = original.title"

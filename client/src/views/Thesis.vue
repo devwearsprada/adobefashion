@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import breakpoints from '@/plugins/breakpoints'
-import EventBus from '@/event-bus'
-
 export default {
-  name: 'Home',
+  name: 'Thesis',
   metaInfo() {
     return {
-      title: this.title
+      title: this.title,
+      bodyAttrs: {
+        class: 'bg-primary'
+      }
     }
   },
   components: { 
@@ -28,7 +28,6 @@ export default {
   },
   data() {
     return {
-      breakpoints,
       title: null,
       sectionObserver: null,
       oldPos: null,
@@ -37,10 +36,6 @@ export default {
   mounted() {
     // Initialize intersection observer
     this.initIntersectionObserver()
-    // Event emitted by archive
-    EventBus.$on('observeArchive', element => {
-      this.observeSection(element)
-    })
   },
   computed: {
     thesis() {
@@ -57,7 +52,9 @@ export default {
       this.sectionObserver = new IntersectionObserver(this.sectionObserverHandler, options)
     },
     observeSection(element) {
-      this.sectionObserver.observe(element)
+      this.$nextTick(() => {
+        this.sectionObserver.observe(element)
+      })
     },
     sectionObserverHandler(entries) {
       for (const entry of entries) {
@@ -74,36 +71,9 @@ export default {
           // update route hash
           if (hashedId !== this.$route.hash)
             this.$router.push({ hash: hashedId, params: { scroll: false } })
-
-          // show scroll to top at the archive section
-          if (sectionId === 'archive') {
-            this.oldPos = window.pageYOffset || document.documentElement.scrollTop
-            window.addEventListener('scroll', this.moveToTop)
-          } else {
-            this.oldPos = null
-            window.removeEventListener('scroll', this.moveToTop)
-          }
         }
       }
     },
-    moveToTop() {
-      const top = window.pageYOffset || document.documentElement.scrollTop
-      const value = top - this.oldPos
-
-      if (breakpoints.is === 'sm' && breakpoints.is === 'all') {
-        if (value >= 3000) {
-          this.$emit('scrollToTop', true)
-        } else {
-          this.$emit('scrollToTop', false)
-        }
-      } else {
-        if (value >= 500) {
-          this.$emit('scrollToTop', true)
-        } else {
-          this.$emit('scrollToTop', false)
-        }
-      }
-    }
   },
 }
 </script>
