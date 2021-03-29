@@ -17,14 +17,14 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - name: Moving the uploads folder
-      run: |
-        if [[ -d public/uploads ]]
-        then
-          cp -r public/uploads/ ../../../../
-        else
-          echo "No uploads folder present"
-        fi
+    # - name: Moving the uploads folder
+    #   run: |
+    #     if [[ -d ./public/uploads ]]
+    #     then
+    #       cp -r public/uploads/ ../../../../
+    #     else
+    #       echo "No uploads folder present"
+    #     fi
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
