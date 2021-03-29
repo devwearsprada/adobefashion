@@ -64,9 +64,11 @@ export default {
           const hashedId = `#${sectionId}`;
 
           // set original image that is in view
-          (originalId) 
-            ? this.$store.dispatch('calculateInView', originalId) 
-            : this.$store.dispatch('calculateInView', null)
+          if (originalId)  {
+            this.$store.dispatch('calculateInView', originalId)
+           } else {
+            this.$store.dispatch('calculateInView', null)
+           }
 
           // update route hash
           if (hashedId !== this.$route.hash)

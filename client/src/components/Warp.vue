@@ -115,6 +115,7 @@ export default {
   },
   methods: {
     init() {
+      console.log('go');
       const canvas = this.$refs.webglcanvas;
 
       // Set canvas context to WEBGL

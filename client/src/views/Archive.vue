@@ -14,8 +14,8 @@
       class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
     >
       <div
-        v-for="(edit, i) in edits"
-        :key="i"
+        v-for="edit in edits"
+        :key="edit.id"
         class="transition-all duration-200"
       >
         <image-lazy
