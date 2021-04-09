@@ -39,7 +39,7 @@ export default new Vuex.Store({
       state.editsCount = 0
       state.edits = []
     },
-    setColophon(state, colophon) {
+    setColophon(state, colophon) {  
       state.colophon = colophon
     },
     setInView(state, original) {
@@ -73,7 +73,7 @@ export default new Vuex.Store({
         commit('setOriginals', originals)
       })
     },
-    fetchEditsNew({ commit, state }, $state) {
+    fetchEdits({ commit, state }, $state) {
       let id = state.typeId
 
       let count = (id)
@@ -84,7 +84,6 @@ export default new Vuex.Store({
         ? `${process.env.VUE_APP_API_URL}/edits?original.id=${id}&_limit=10&_start=${state.editsCount}&_sort=createdAt:DESC`
         : `${process.env.VUE_APP_API_URL}/edits?_limit=10&_start=${state.editsCount}&_sort=createdAt:DESC`    
 
-      
       axios.get(count)
       .then(response => {
         // set total edit count
@@ -95,10 +94,10 @@ export default new Vuex.Store({
           if (state.editsCount < state.totalEdits) {
             commit('pushEdits', response.data)
             commit('addEditsCount', response.data.length)
-            $state.loaded()
+            if ($state) $state.loaded()
           } else {
             // all items are fetched
-            $state.complete()
+            if ($state) $state.complete()
           }
         })
       })
@@ -162,8 +161,9 @@ export default new Vuex.Store({
         return anchor.__component === 'sections.anchor-look' 
           || anchor.__component === 'sections.anchor' 
       })
+    },
+    typeId(state) {
+      return state.typeId
     }
-  },
-  modules: {
   }
 })

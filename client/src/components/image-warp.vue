@@ -9,7 +9,10 @@
       <div
         class="flex h-full items-center justify-center"
       >
-        Loading...
+        <img
+          class="w-1/4 animate-spin-slow filter-shadow" 
+          src="@/assets/images/AF_006.png"
+        />
       </div>
     </div>
     <canvas
@@ -32,7 +35,7 @@ import axios from 'axios'
 import { Move, Point } from '@/constructors'
 
 export default {
-  name: 'WarpImage',
+  name: 'ImageWarp',
   props: {
     image: {
       type: String,

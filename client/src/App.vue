@@ -6,22 +6,12 @@
         v-if="inView && editor"
       />
     </transition-fade>
-
-    <transition-fade>
-      <pop-up-modal
-        v-if="modal"
-        @toggleModal="modal = !modal"
-      />
-    </transition-fade>
-
     <navigation/>
-
     <transition-view>
       <router-view
         class="container pb-10 md:pb-20"
       />
     </transition-view>
-
     <transition-image-editor>
       <image-editor
         v-if="inView && $route.name === 'Thesis'"
@@ -30,7 +20,6 @@
         :toggleEditor="editor"
       />
     </transition-image-editor>
-
   </div>
 </template>
 
@@ -54,14 +43,13 @@ export default {
     ]
   },
   components: {
-    // Preloader: () => import(/* webpackChunkName: "Preloader" */ '@/components/Preloader.vue'),
+    // Preloader: () => import(/* webpackChunkName: "Preloader" */ '@/components/preloader.vue'),
     BlurOverlay: () => import(/* webpackChunkName: "Sections" */ '@/components/blur-overlay.vue'),
-    Navigation: () => import(/* webpackChunkName: "Navigation" */ '@/components/Navigation.vue'),
-    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionFade.vue'),
-    TransitionView: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionView.vue'),
-    TransitionImageEditor: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionImageEditor.vue'),
-    ImageEditor: () => import(/* webpackChunkName: "ImageEditor" */ '@/components/image-editor.vue'),
-    PopUpModal: () => import(/* webpackChunkName: "Modals" */ '@/components/pop-up-modal.vue'),
+    Navigation: () => import(/* webpackChunkName: "Navigation" */ '@/components/navigation.vue'),
+    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-fade.vue'),
+    TransitionView: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-view.vue'),
+    TransitionImageEditor: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-image-editor.vue'),
+    ImageEditor: () => import(/* webpackChunkName: "Images" */ '@/components/image-editor.vue'),
   },
   data() {
     return {
@@ -97,11 +85,6 @@ export default {
     },
     previousView() {
       return this.$store.getters.previousView
-    }
-  },
-  methods: {
-    toggle() {
-      console.log('yo');
     }
   }
 }

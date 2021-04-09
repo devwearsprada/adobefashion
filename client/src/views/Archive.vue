@@ -14,8 +14,8 @@
       class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
     >
       <div
-        v-for="edit in edits"
-        :key="edit.id"
+        v-for="(edit, i) in edits"
+        :key="`${edit.id}-${i}`"
         class="relative transition-all duration-200"
       >
         <button 
@@ -57,8 +57,8 @@
 export default {
   name: 'Archive',
   components: {
-    InfiniteLoading: () =>  import('vue-infinite-loading'),
-    ImageLazy: () => import('@/components/image-lazy.vue')
+    InfiniteLoading: () =>  import(/* webpackChunkName: "Components" */ 'vue-infinite-loading'),
+    ImageLazy: () => import(/* webpackChunkName: "Images" */ '@/components/image-lazy.vue')
   },
   metaInfo() {
     return {
@@ -81,7 +81,7 @@ export default {
       el.style.height = height;
     },
     loadMore($state) {
-      this.$store.dispatch('fetchEditsNew', $state)
+      this.$store.dispatch('fetchEdits', $state)
     }
   },
   computed: {

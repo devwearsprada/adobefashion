@@ -5,7 +5,7 @@
     <article
       class="order-2 lg:order-none lg:col-span-2" 
     >
-      <h1 class="text-center">Colophon</h1>
+      <h1 class="text-center text-3xl">Colophon</h1>
       <div v-html="colophon.content"/>
     </article>
   </section>

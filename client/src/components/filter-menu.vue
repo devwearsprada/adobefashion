@@ -8,21 +8,19 @@
     >
       <li 
         class="cursor-pointer"
-        @click="setTypeId()"
+        @click="setTypeId"
       >
         All
       </li>
       <li
         class="cursor-pointer" 
-        @click="setTypeId(original.id)"
+        @click="setTypeId($event, original.id)"
         v-for="(original, index) in originals"
         :key="`filter-${index}`"
       >
         {{ original.title }}
       </li>
     </ul>
-
-    <!-- mobile -->
     <div class="md:hidden absolute rounded-xl shadow-primary">
       <div class="h-2 rounded-t-full bg-primary"/>
         <ul
@@ -40,13 +38,13 @@
             >
               <li 
                 class="cursor-pointer whitespace-nowrap"
-                @click="setTypeId()"
+                @click="setTypeId"
               >
                 All
               </li>
               <li
                 class="cursor-pointer whitespace-nowrap" 
-                @click="setTypeId(original.id)"
+                @click="setTypeId($event, original.id)"
                 v-for="(original, index) in originals"
                 :key="`filter-${index}`"
               >
@@ -57,8 +55,6 @@
         </ul>
       <div class="h-2 rounded-b-full bg-primary"/>
     </div>
-    <!-- -->
-
     <div class="hidden md:block h-2 rounded-b-full bg-primary"/>
   </div>
 </template>
@@ -67,7 +63,7 @@
 export default {
   name: 'FilterMenu',
   components: { 
-    TransitionExpand: () => import('./transitions/TransitionExpand.vue')
+    TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-expand.vue')
   },
   data: () => ({
     expanded: false
@@ -76,12 +72,16 @@ export default {
     originals() {
       return this.$store.getters.originals
     },
+    stateId() {
+      return this.$store.getters.typeId
+    }
   },
   methods: {
-    setTypeId(id) {
+    setTypeId(e, id) {
       this.$store.commit('clearEdits')
       this.$store.commit('setTypeId', id)
-    }
-  }
+      this.$store.dispatch('fetchEdits')
+    },
+  },
 }
 </script>

@@ -46,7 +46,7 @@
             @click="editing = !editing"
           >
             <div
-              class="absolute flex justify-center items-center w-full h-full bg-secondary bg-opacity-50 select-none"
+              class="absolute flex justify-center items-center w-full h-full bg-secondary bg-opacity-60 select-none"
             >
               {{ startEditText }}
             </div>
@@ -63,11 +63,11 @@
 
             <div
               v-if="save"
-              class="absolute flex justify-center items-center w-full h-full bg-secondary bg-opacity-50 select-none"
+              class="absolute flex justify-center items-center w-full h-full bg-secondary bg-opacity-60 select-none"
             >
               <img
                 v-if="spinner" 
-                class="w-1/4 animate-spin-slow" 
+                class="w-1/4 animate-spin-slow filter-shadow" 
                 src="@/assets/images/AF_006.png"
               />
               <span 
@@ -77,7 +77,7 @@
                 Your edit has been published<br/> to the archive
               </span>
             </div>
-            <warp-image
+            <image-warp
               v-show="editing"
               :key="original.item.id"
               :image="api + original.item.url"
@@ -140,10 +140,10 @@ export default {
     }
   },
   components: {
-    WarpImage: () => import('@/components/warp-image.vue'),
-    ImageLazy: () => import('@/components/image-lazy.vue'),
-    TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionExpand.vue'),
-    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionFade.vue')
+    ImageWarp: () => import(/* webpackChunkName: "Images" */ '@/components/image-warp.vue'),
+    ImageLazy: () => import(/* webpackChunkName: "Images" */ '@/components/image-lazy.vue'),
+    TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-expand.vue'),
+    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-fade.vue')
 },
   data() {
     return {
