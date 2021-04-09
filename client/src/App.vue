@@ -15,7 +15,6 @@
     <transition-image-editor>
       <image-editor
         v-if="inView && $route.name === 'Thesis'"
-        @toggleModal="modal = !modal"
         @toggleEditor="editor = !editor"
         :toggleEditor="editor"
       />
@@ -53,7 +52,6 @@ export default {
   },
   data() {
     return {
-      modal: false,
       editor: false,
     }
   },
