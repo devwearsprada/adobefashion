@@ -21,8 +21,8 @@
       "required": true
     },
     "original": {
-      "via": "edits",
-      "model": "original"
+      "model": "original",
+      "via": "edits"
     },
     "title": {
       "type": "string",
@@ -32,6 +32,10 @@
     "slug": {
       "type": "uid",
       "targetField": "title"
+    },
+    "available": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

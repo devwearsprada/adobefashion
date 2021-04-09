@@ -21,8 +21,8 @@
       "required": true
     },
     "edits": {
-      "collection": "edit",
-      "via": "original"
+      "via": "original",
+      "collection": "edit"
     },
     "title": {
       "type": "string",
