@@ -81,11 +81,9 @@ export default new Vuex.Store({
       : `${process.env.VUE_APP_API_URL}/edits/count`
       
       let url = (id) 
-        ? `${process.env.VUE_APP_API_URL}/edits?original.id=${id}&_limit=10&_start=${state.editsCount}`
-        : `${process.env.VUE_APP_API_URL}/edits?_limit=10&_start=${state.editsCount}`    
+        ? `${process.env.VUE_APP_API_URL}/edits?original.id=${id}&_limit=10&_start=${state.editsCount}&_sort=createdAt:DESC`
+        : `${process.env.VUE_APP_API_URL}/edits?_limit=10&_start=${state.editsCount}&_sort=createdAt:DESC`    
 
-
-      console.log(url);
       
       axios.get(count)
       .then(response => {

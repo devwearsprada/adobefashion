@@ -2,6 +2,7 @@
   <transition 
     name="fade"
     mode="out-in"
+    :duration="duration"
   >
     <slot/>
   </transition>
@@ -14,7 +15,14 @@ export default {
     mode: {
       type: String,
       default: ''
-    }
+    },
+    duration: {
+      type: Object,
+      default: () => ({
+        enter: 500,
+        leave: 500
+      })
+    },
   }
 }
 </script>

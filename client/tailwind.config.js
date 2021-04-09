@@ -19,34 +19,13 @@ module.exports = {
         'xl': '1280px'
       },
     },
-    animation: {
-      'bounce': 'bounce 1s 3',
-    },
-    keyframes: {
-      bounce: {
-        '0%, 100%': { 
-          transform: 'translateY(0)',
-          animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)'
-        },
-        '50%': {
-          transform: 'translateY(-8%)',
-          animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)'
-        }
-      }
-    },
     backdropFilter: {
       'none': 'none',
       'blur': 'blur(8px)',
     },
     extend: {
       animation: {
-        'scale': 'scale 1s 3'
-      },
-      keyframes: {
-        scale: {
-          '0%, 100%': { transform: 'scale(1)' },
-          '50%': {transform: 'scale(1.01)' }
-        }
+        'spin-slow': 'spin 2s linear infinite',
       },
       fontFamily: {
         'neue-machina': ['NeueMachina', 'sans-serif'],

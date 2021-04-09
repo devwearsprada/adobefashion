@@ -1,9 +1,29 @@
 <template>
-  <div class="grid grid-cols-1 grid-rows-1">
-    <template v-if="ready">
-      <canvas class="col-span-1 col-start-1 row-start-1 w-full" :width="imageSizes[0]" :height="imageSizes[1]" ref="webglcanvas"></canvas>
-      <canvas class="col-span-1 col-start-1 row-start-1 w-full"  :width="imageSizes[0]" :height="imageSizes[1]" ref="2dcanvas"></canvas>
-    </template>
+  <div 
+    class="grid grid-cols-1 grid-rows-1"
+  >
+    <div
+      v-show="!imageLoaded"
+      class="bg-secondary z-10 col-span-1 col-start-1 row-start-1 w-full" 
+    >
+      <div
+        class="flex h-full items-center justify-center"
+      >
+        Loading...
+      </div>
+    </div>
+    <canvas
+      :height="height/2"
+      :width="width/2"
+      class="col-span-1 col-start-1 row-start-1 w-full" 
+      ref="webglcanvas"
+    />
+    <canvas
+      :height="height/2"
+      :width="width/2"
+      class="col-span-1 col-start-1 row-start-1 w-full" 
+      ref="2dcanvas"
+    />
   </div>
 </template>
 
@@ -12,60 +32,59 @@ import axios from 'axios'
 import { Move, Point } from '@/constructors'
 
 export default {
-  name: 'Warp',
-  props: ['image', 'saveEdit', 'resetEdit'],
-  data() {
-    return {
-      api: process.env.VUE_APP_API_URL,
-      ready: false,
-      imageDimensions: {
-        width: null,
-        height: null,
-      },
-      gl: null,
-      lineProgram: null,
-      texCoordLocation2: null,
-      texCoordBuffer2: null,
-      resolution: 100,
-      pictureProgram: null,
-      texCoordLocation: null,
-      texCoordBuffer: null,
-      moves: [],
-      MAXMOVES: 100,
-      renderLines: false,
-      canvasMode: 0,
-      modeUniform: 1,
-      stop: false,
+  name: 'WarpImage',
+  props: {
+    image: {
+      type: String,
+      required: true
+    },
+    width: {
+      type: Number,
+      required: true
+    },
+    height: {
+      type: Number,
+      required: true
+    },
+    resetEdit: {
+      type: Boolean,
+      required: true
+    },
+    saveEdit: {
+      type: Boolean,
+      required: true
     }
   },
-  created() {
-    // get image dimensions
-    const image = new Image()
-    image.src = this.image
-    image.onload = () => {
-      this.imageDimensions.width = image.width
-      this.imageDimensions.height = image.height
-    }
+  data: () => ({
+    api: process.env.VUE_APP_API_URL,
+    ready: false,
+    imageLoaded: false,
+    imageDimensions: {
+      width: null,
+      height: null,
+    },
+    gl: null,
+    lineProgram: null,
+    texCoordLocation2: null,
+    texCoordBuffer2: null,
+    resolution: 100,
+    pictureProgram: null,
+    texCoordLocation: null,
+    texCoordBuffer: null,
+    moves: [],
+    MAXMOVES: 100,
+    renderLines: false,
+    canvasMode: 0,
+    modeUniform: 1,
+    stop: false,
+  }),
+  mounted() {
+    this.init()
+    this.inputHandler()
   },
   watch: {
-    imageSizes() {
-      if (this.imageSizes[0] > 0 && this.imageSizes[1] > 0) {
-        this.ready = true
-        this.$nextTick(() => {
-          this.init()
-          this.inputHandler()
-        })
-      }
-    },
-    resetEdit() {
-      if (this.resetEdit) {
-        this.reset()
-        this.$emit('reset')
-      }
-    },
     saveEdit() {
       if (this.saveEdit) {
-        console.log('yo');
         const canvas = this.$refs.webglcanvas
 
         canvas.toBlob((blob) => {
@@ -82,42 +101,27 @@ export default {
               "Content-Type": "multipart/form-data"
             }
           })
-          .then((response) => {
-            this.$store.commit('pushEdits', [response.data])
+          .then(() => {
             this.$emit('save')
-            // TODO: Push response to edits array in store
           })
         })
+      }
+    },
+    resetEdit() {
+      if (this.resetEdit) {
+        this.reset()
+        this.$emit('reset')
       }
     }
   },
   computed: {
-    devicePixelRatio() {
-      var devicePixelRatio;
-      if (typeof window.devicePixelRatio !== undefined) devicePixelRatio = window.devicePixelRatio;
-      else devicePixelRatio = 2;
-
-      return devicePixelRatio;
-    },
-    imageSizes() {
-      let width = 1, height = 1
-      const imageWidth = this.imageDimensions.width
-      const imageHeight = this.imageDimensions.height
-
-      width = Math.round((imageWidth / 2) * this.devicePixelRatio)
-      height = Math.round((imageHeight / 2) * this.devicePixelRatio)
-
-      return [width, height]
-    },
     original() {
       return this.$store.getters.inView
     }
   },
   methods: {
     init() {
-      console.log('go');
       const canvas = this.$refs.webglcanvas;
-
       // Set canvas context to WEBGL
       try {
         this.gl = canvas.getContext("webgl", { preserveDrawingBuffer: true })
@@ -196,32 +200,9 @@ export default {
         // TODO: clean error handling
         console.warn(e)
       }
-
+      
       // load image
       this.loadImage()
-    },
-    loadProgram(gl, vertexShader, fragmentShader) {
-      // create a program object
-      const program = gl.createProgram()
-
-      // attach the two shaders
-      gl.attachShader(program, vertexShader)
-      gl.attachShader(program, fragmentShader)
-
-      // link them together
-      gl.linkProgram(program)
-
-      // check link status
-      const linked = gl.getProgramParameter(program, gl.LINK_STATUS)
-      if (!linked) {
-        const lastError = gl.getProgramInfoLog(program)
-        console.warn("Error in program linking: " + lastError)
-
-        gl.deleteProgram(program)
-        return null
-      }
-
-      return program
     },
     getShader(gl, id) {
       // get shader script from document
@@ -259,6 +240,29 @@ export default {
 
       return shader
 
+    },
+    loadProgram(gl, vertexShader, fragmentShader) {
+      // create a program object
+      const program = gl.createProgram()
+
+      // attach the two shaders
+      gl.attachShader(program, vertexShader)
+      gl.attachShader(program, fragmentShader)
+
+      // link them together
+      gl.linkProgram(program)
+
+      // check link status
+      const linked = gl.getProgramParameter(program, gl.LINK_STATUS)
+      if (!linked) {
+        const lastError = gl.getProgramInfoLog(program)
+        console.warn("Error in program linking: " + lastError)
+
+        gl.deleteProgram(program)
+        return null
+      }
+
+      return program
     },
     createRedGrid() {
       // make a 0,0 to 1,1 triangle mesh, using n = resolution step
@@ -396,6 +400,8 @@ export default {
         ctx.clearRect(0, 0, canvWidth, canvHeight)
 
         this.reset()
+
+        if (!this.imageLoaded) this.imageLoaded = true
       }
     },
     reset() {
@@ -514,6 +520,7 @@ export default {
       const canvas = this.$refs['2dcanvas']
       // set up mouse events on the canvas object
       canvas.onmousedown = (e) => {
+        console.log('down');
         e.preventDefault()
         this.stop = false
         this.move = this.newMove(this.getMousePoint(e))
@@ -524,27 +531,27 @@ export default {
         this.move = this.newMove(this.getMousePoint(e))
       }
 
-      canvas.onmouseup = (e) => {
-        e.preventDefault()
+      canvas.onmouseup = () => {
+        // e.preventDefault()
         this.move = undefined
         this.render()
       }
 
-      canvas.ontouchend = (e) => {
-        e.preventDefault()
+      canvas.ontouchend = () => {
+        // e.preventDefault()
         this.move = undefined
         this.render()
       }
 
-      window.onmouseup = (e) => {
-        e.preventDefault()
+      window.onmouseup = () => {
+        // e.preventDefault()
         this.stop = true
         this.move = undefined
         this.render()
       }
 
-      window.ontouchend = (e) => {
-        e.preventDefault()
+      window.ontouchend = () => {
+        // e.preventDefault()
         this.stop = true
         this.move = undefined
         this.render()

@@ -1,19 +1,20 @@
 <template>
-  <section
+  <section 
     ref="section"
-    class="grid grid-cols-1 lg:grid-cols-3 lg:gap-10"
+    class="grid lg:grid-cols-3 lg:gap-10"
+    :data-id="data.image.id"
     :id="data.slug"
   >
     <article
       class="order-2 lg:order-none lg:col-span-2" 
       v-html="data.content"
     />
-    <aside 
+    <aside
       class="order-1 lg:order-none lg:col-span-1"
     >
-      <hadogenes-title>
+      <h1 class="font-hadogenes-regular text-5xl text-center md:py-8 break-words">
         {{ data.title }}
-      </hadogenes-title>
+      </h1>
     </aside>
   </section>
 </template>
@@ -21,10 +22,7 @@
 <script>
 export default {
   props: ['data'],
-  name: 'AnchorSection',
-  components: {
-    HadogenesTitle: () => import(/* webpackChunkName: "Title" */ '@/components/HadogenesTitle.vue'),
-  },
+  name: 'ParagraphSection',
   mounted() {
     const section = this.$refs.section
     this.$emit('observe', section)

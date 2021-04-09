@@ -7,6 +7,7 @@
       :data="section"
       @observe="observeSection"
     />
+    <colophon/>
   </div>
 </template>
 
@@ -22,9 +23,9 @@ export default {
     }
   },
   components: { 
-    'sections.anchor-look': () => import(/* webpackChunkName: "Sections" */ '@/components/sections/AnchorLookSection.vue'),
-    'sections.anchor': () => import(/* webpackChunkName: "Sections" */ '@/components/sections/AnchorSection.vue'),
-    ImageEditor: () => import(/* webpackChunkName: "Warp" */ '@/components/ImageEditor.vue')
+    'sections.anchor-look': () => import(/* webpackChunkName: "Sections" */ '@/components/sections/anchor-look-section.vue'),
+    'sections.anchor': () => import(/* webpackChunkName: "Sections" */ '@/components/sections/anchor-section.vue'),
+    Colophon: () => import(/* webpackChunkName: "Sections" */ '@/components/sections/colophon.vue')
   },
   data() {
     return {

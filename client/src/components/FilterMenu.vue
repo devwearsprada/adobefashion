@@ -1,10 +1,10 @@
 <template>
   <div
-    class="sticky top-0 rounded-xl shadow-primary"
+    class="sticky top-0 md:rounded-xl md:shadow-primary"
   >
-    <div class="h-2 rounded-t-full bg-primary"/>
+    <div class="hidden md:block h-2 rounded-t-full bg-primary"/>
     <ul
-      class="flex flex-row space-x-6 bg-primary px-4"
+      class="hidden md:flex flex-row space-x-6 bg-primary px-4"
     >
       <li 
         class="cursor-pointer"
@@ -21,20 +21,61 @@
         {{ original.title }}
       </li>
     </ul>
-    <div class="h-2 rounded-b-full bg-primary"/>
+
+    <!-- mobile -->
+    <div class="md:hidden absolute rounded-xl shadow-primary">
+      <div class="h-2 rounded-t-full bg-primary"/>
+        <ul
+          class="bg-primary space-y-4 px-4"
+        >
+          <li 
+            class="cursor-pointer whitespace-nowrap"
+            @click="expanded = !expanded"
+          >
+            Filter
+          </li>
+          <transition-expand>
+            <div
+              v-show="expanded"
+            >
+              <li 
+                class="cursor-pointer whitespace-nowrap"
+                @click="setTypeId()"
+              >
+                All
+              </li>
+              <li
+                class="cursor-pointer whitespace-nowrap" 
+                @click="setTypeId(original.id)"
+                v-for="(original, index) in originals"
+                :key="`filter-${index}`"
+              >
+                {{ original.title }}
+              </li>
+            </div>
+          </transition-expand>
+        </ul>
+      <div class="h-2 rounded-b-full bg-primary"/>
+    </div>
+    <!-- -->
+
+    <div class="hidden md:block h-2 rounded-b-full bg-primary"/>
   </div>
 </template>
 
 <script>
 export default {
   name: 'FilterMenu',
+  components: { 
+    TransitionExpand: () => import('./transitions/TransitionExpand.vue')
+  },
+  data: () => ({
+    expanded: false
+  }),
   computed: {
     originals() {
       return this.$store.getters.originals
     },
-  },
-  mounted() {
-
   },
   methods: {
     setTypeId(id) {

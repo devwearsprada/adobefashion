@@ -1,26 +1,36 @@
 <template>
   <div id="adobefashion">
-    <!-- <transition-fade>
+    <transition-fade>
       <blur-overlay
-        @click.native="blurEditor = false"
-        v-if="blurMenu || inView && blurEditor"
+        @click.native="editor = !editor"
+        v-if="inView && editor"
       />
-    </transition-fade> -->
-    <navigation
-      @menuOpen="toggleBlur"
-    />
+    </transition-fade>
+
+    <transition-fade>
+      <pop-up-modal
+        v-if="modal"
+        @toggleModal="modal = !modal"
+      />
+    </transition-fade>
+
+    <navigation/>
+
     <transition-view>
       <router-view
         class="container pb-10 md:pb-20"
       />
     </transition-view>
+
     <transition-image-editor>
       <image-editor
         v-if="inView && $route.name === 'Thesis'"
-        :editorOpen="blurEditor"
-        @editorOpen="toggleBlur"
+        @toggleModal="modal = !modal"
+        @toggleEditor="editor = !editor"
+        :toggleEditor="editor"
       />
     </transition-image-editor>
+
   </div>
 </template>
 
@@ -45,20 +55,18 @@ export default {
   },
   components: {
     // Preloader: () => import(/* webpackChunkName: "Preloader" */ '@/components/Preloader.vue'),
-    // BlurOverlay: () => import(/* webpackChunkName: "Sections" */ '@/components/BlurOverlay.vue'),
+    BlurOverlay: () => import(/* webpackChunkName: "Sections" */ '@/components/blur-overlay.vue'),
     Navigation: () => import(/* webpackChunkName: "Navigation" */ '@/components/Navigation.vue'),
-    // ArchiveSection: () => import(/* webpackChunkName: "Sections" */ '@/components/sections/ArchiveSection.vue'),
-    // TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionFade.vue'),
+    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionFade.vue'),
     TransitionView: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionView.vue'),
-    // TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionExpand.vue'),
     TransitionImageEditor: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/TransitionImageEditor.vue'),
-    ImageEditor: () => import(/* webpackChunkName: "ImageEditor" */ '@/components/ImageEditor.vue'),
+    ImageEditor: () => import(/* webpackChunkName: "ImageEditor" */ '@/components/image-editor.vue'),
+    PopUpModal: () => import(/* webpackChunkName: "Modals" */ '@/components/pop-up-modal.vue'),
   },
   data() {
     return {
-      blurMenu: false,
-      blurEditor: false,
-      scrollToTopEnabled: false,
+      modal: false,
+      editor: false,
     }
   },
   created() {
@@ -68,6 +76,11 @@ export default {
     this.$store.dispatch('fetchOriginals')
     // Get colophon
     this.$store.dispatch('fetchColophon')
+  },
+  watch: {
+    inView() {
+      if (this.inView === null) this.editor = false
+    }
   },
   computed: {
     slideAnimation() {
@@ -87,12 +100,9 @@ export default {
     }
   },
   methods: {
-    toggleBlur(payload) {
-      const data = payload[0]
-      const value = payload[1]
-
-      this[data] = value
-    },
+    toggle() {
+      console.log('yo');
+    }
   }
 }
 </script>

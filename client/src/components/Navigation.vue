@@ -1,8 +1,8 @@
 <template>
-  <nav class="sticky top-0 flex p-4 space-x-4 w-full">
+  <nav class="sticky top-0 flex p-4 space-x-4 w-full z-30 filter-shadow">
     <div 
+      class="rounded-xl transition-all duration-300 w-1/12 min-w-max"
       :class="shadowClass"
-      class="rounded-xl transition-all w-1/12 min-w-max"
     >
       <div 
         class="h-2 rounded-t-full transition-colors duration-300 ease-in-out"
@@ -46,17 +46,7 @@ export default {
   },
   data() {
     return {
-      active: false,
       breakpoints,
-    }
-  },
-  watch: {
-    active() {
-      if (this.active) {
-        this.$emit('menuOpen', ['blurMenu', true])
-      } else {
-        this.$emit('menuOpen', ['blurMenu', false])
-      }
     }
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative"
+    class="relative pt-4"
   >
     <transition-group
       enter-active-class="transform-gpu"
@@ -16,8 +16,14 @@
       <div
         v-for="edit in edits"
         :key="edit.id"
-        class="transition-all duration-200"
+        class="relative transition-all duration-200"
       >
+        <button 
+          class="absolute flex justify-center items-center right-0 w-12 h-12 -mr-4 -mt-4 z-20 cursor-pointer select-none rounded-full border border-black bg-secondary"
+          v-if="edit.available"
+        >
+          <a :href="`mailto:rosalievanpinxteren@gmail.com?subject=Hi Rosalie, I would love to buy ${edit.title}&body=Hi Rosalie,%0D%0A%0D%0AI'm interested in buying ${edit.title}. What would be the estimate to buy this look and to ship it to the following address:%0D%0A%0D%0AStreet + number:%0D%0APostal code:%0D%0ACity:%0D%0ACountry:%0D%0A%0D%0AThank you! Looking forward to hear from you.%0D%0A%0D%0ABest regards,%0D%0A%0D%0A`">Buy</a>
+        </button>
         <image-lazy
           class="shadow-primary"
           :key="edit.id"
@@ -29,7 +35,11 @@
                       : api + edit.image.formats.small.url"
           :lazy-srcset="api + edit.image.url"
         />
+        <h1 class="font-hadogenes-regular text-2xl pt-2 -ml-1">
+          {{ edit.title }}
+        </h1>
       </div>
+      
     </transition-group>
     <infinite-loading
       :identifier="Math.random()"
@@ -67,8 +77,6 @@ export default {
     beforeLeave(el) {
       const { width, height } = window.getComputedStyle(el);
 
-      // el.style.left = `${el.offsetLeft - parseFloat(marginLeft, 10)}px`;
-      // el.style.top = `${el.offsetTop - parseFloat(marginTop, 10)}px`;
       el.style.width = width;
       el.style.height = height;
     },
