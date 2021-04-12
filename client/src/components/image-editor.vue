@@ -11,7 +11,10 @@
           @click="toggleInstruction"
         >
           <template v-if="instructions">
-            <img class="w-1/2" src="@/assets/images/close.svg"/>
+            <img 
+              class="w-2/6 md:w-5/12" 
+              src="@/assets/images/close.svg"
+            />
           </template>
           <template v-else>
             ?
@@ -30,7 +33,7 @@
           >
             <div
               v-if="instructions"
-              class="absolute z-10 px-2 flex w-full h-full bg-secondary select-none overflow-y-scroll"
+              class="absolute z-10 px-2 flex w-full h-full bg-secondary select-none overflow-x-auto text-sm lg:text-xs"
             > 
               Dear Visitor,
               <br/><br/>
@@ -74,7 +77,7 @@
             >
               <img
                 v-if="spinner" 
-                class="w-1/4 animate-spin-slow filter-shadow" 
+                class="w-1/4 animate-spin-slow" 
                 src="@/assets/images/loader.svg"
               />
               <span 
@@ -116,7 +119,7 @@
           </transition-fade>
         </button>
         <div 
-          class="col-span-3 text-center font-hadogenes-regular text-3xl uppercase select-none whitespace-nowrap"
+          class="col-span-3 text-center font-hadogenes-regular text-2xl uppercase select-none whitespace-nowrap"
           @click="$emit('toggleEditor')"
         >
           <div class="transition-all ease-in-out transform hover:scale-110">
@@ -199,7 +202,6 @@ export default {
         if (!this.toggleEditor) {
           this.$emit('toggleEditor')
         }
-        this.toggleEditor = true
       }      
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="grid grid-cols-1 grid-rows-1"
+    class="grid grid-cols-1 grid-rows-1 cursor-move"
   >
     <div
       v-show="!imageLoaded"
@@ -10,7 +10,7 @@
         class="flex h-full items-center justify-center"
       >
         <img
-          class="w-1/4 animate-spin-slow filter-shadow" 
+          class="w-1/4 animate-spin-slow" 
           src="@/assets/images/loader.svg"
         />
       </div>
@@ -523,7 +523,6 @@ export default {
       const canvas = this.$refs['2dcanvas']
       // set up mouse events on the canvas object
       canvas.onmousedown = (e) => {
-        console.log('down');
         e.preventDefault()
         this.stop = false
         this.move = this.newMove(this.getMousePoint(e))

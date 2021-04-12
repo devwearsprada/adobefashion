@@ -34,21 +34,25 @@
   }
 
   html {
-  overflow-y: scroll;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
+    overflow-y: scroll;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-size: 19px;
+  }
 
   body {
-    @apply bg-primary font-neue-machina text-xl transition-colors duration-200;
+    @apply bg-primary font-neue-machina transition-colors duration-200;
   }
 
   h1 {
     @apply font-swiss-black;
-    overflow-wrap: word-break;
+    -webkit-hyphens: manual;
+    -moz-hyphens: manual;
+    -ms-hyphens: manual;
+    hyphens: manual;
   }
 
   h3 {
-    @apply font-swiss-black text-2xl;
+    @apply font-swiss-black text-xl;
   }
 
   button {
@@ -76,7 +80,7 @@
   }
 
   div.container section:first-child article {
-    @apply text-2xl text-secondary;
+    @apply text-xl text-secondary;
   }
 
   div.container section:first-child article p:first-of-type {
@@ -92,6 +96,6 @@
   }
 
   div.container section:first-child article h2 {
-    @apply font-swiss-black text-4xl lg:text-6xl;
+    @apply font-swiss-black text-2xl lg:text-4xl;
   }
 }

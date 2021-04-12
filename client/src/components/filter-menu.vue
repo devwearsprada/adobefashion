@@ -38,13 +38,13 @@
             >
               <li 
                 class="cursor-pointer whitespace-nowrap"
-                @click="setTypeId"
+                @click="setTypeId; expanded = false"
               >
                 All
               </li>
               <li
                 class="cursor-pointer whitespace-nowrap" 
-                @click="setTypeId($event, original.id)"
+                @click="setTypeId($event, original.id); expanded = false"
                 v-for="(original, index) in originals"
                 :key="`filter-${index}`"
               >

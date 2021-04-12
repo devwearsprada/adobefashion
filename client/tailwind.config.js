@@ -24,6 +24,9 @@ module.exports = {
       'blur': 'blur(8px)',
     },
     extend: {
+      cursor: {
+        'nesw-resize': 'nesw-resize'
+      },
       animation: {
         'spin-slow': 'spin 2s linear infinite',
       },

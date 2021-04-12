@@ -1,7 +1,7 @@
 <template>
   <section 
     ref="section"
-    class="grid lg:grid-cols-3 lg:gap-10"
+    class="grid lg:grid-cols-3 lg:gap-12"
     :data-id="data.image.id"
     :id="data.slug"
   >
@@ -12,7 +12,7 @@
     <aside
       class="order-1 lg:order-none lg:col-span-1"
     >
-      <h1 class="font-hadogenes-regular text-5xl text-center md:py-8">
+      <h1 class="font-hadogenes-regular text-4xl text-center md:py-8">
         {{ data.title }}
       </h1>
     </aside>
