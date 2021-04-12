@@ -11,7 +11,7 @@
       >
         <img
           class="w-1/4 animate-spin-slow filter-shadow" 
-          src="@/assets/images/AF_006.png"
+          src="@/assets/images/loader.svg"
         />
       </div>
     </div>

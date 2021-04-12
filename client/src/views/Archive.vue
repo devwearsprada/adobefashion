@@ -35,7 +35,7 @@
                       : api + edit.image.formats.small.url"
           :lazy-srcset="api + edit.image.url"
         />
-        <h1 class="font-hadogenes-regular text-2xl pt-2 -ml-1">
+        <h1 class="font-hadogenes-regular uppercase text-2xl pt-2 -ml-1">
           {{ edit.title }}
         </h1>
       </div>

@@ -10,7 +10,12 @@
           class="absolute flex justify-center items-center border-black border bg-primary right-2 md:right-5 -mt-7 md:-mt-5 rounded-full w-10 h-10 select-none md:w-8 md:h-8 transition-all transform hover:scale-110"
           @click="toggleInstruction"
         >
-          {{ instructions ? 'X' : '?'}}
+          <template v-if="instructions">
+            <img class="w-1/2" src="@/assets/images/close.svg"/>
+          </template>
+          <template v-else>
+            ?
+          </template>
         </div>
       </div>
 
@@ -20,10 +25,12 @@
           class="bg-secondary select-none"
         >
 
-          <transition-fade>
+          <transition-fade
+            :duration="{ enter: 200, leave: 200 }"
+          >
             <div
               v-if="instructions"
-              class="absolute z-10 px-2 flex w-full h-full bg-secondary select-none overflow-x-scroll"
+              class="absolute z-10 px-2 flex w-full h-full bg-secondary select-none overflow-y-scroll"
             > 
               Dear Visitor,
               <br/><br/>
@@ -68,7 +75,7 @@
               <img
                 v-if="spinner" 
                 class="w-1/4 animate-spin-slow filter-shadow" 
-                src="@/assets/images/AF_006.png"
+                src="@/assets/images/loader.svg"
               />
               <span 
                 class="text-center"
@@ -91,14 +98,17 @@
         </div>
       </transition-expand>
 
-      <div class="grid grid-cols-5 grid-rows-1 bg-secondary px-2">
+      <div 
+        class="grid grid-cols-5 grid-rows-1 bg-secondary px-2"
+        :class="toggleEditor ? 'pt-2' : 'pt-0'"
+      >
         <button 
           class="col-span-1 text-left select-none focus:outline-none"
           :disabled="save"
         >
           <transition-fade>
             <span 
-              v-show="toggleEditor && editing"
+              v-show="toggleEditor && editing && !instructions"
               @click="save = true"
             >
               Save
@@ -109,12 +119,14 @@
           class="col-span-3 text-center font-hadogenes-regular text-3xl uppercase select-none whitespace-nowrap"
           @click="$emit('toggleEditor')"
         >
-          <div class="transition-all ease-in-out transform hover:scale-110">{{ original.title }}</div>
+          <div class="transition-all ease-in-out transform hover:scale-110">
+            {{ original.title }}
+          </div>
         </div>
         <button class="col-span-1 text-right select-none focus:outline-none">
           <transition-fade>
             <span 
-              v-show="toggleEditor && editing"
+              v-show="toggleEditor && editing && !instructions"
               @click="reset = true"
             >
               Reset
@@ -175,6 +187,7 @@ export default {
         this.save = false
         this.$nextTick(() => {
           this.spinner = true
+          this.reset = true
         })
       }, 5000)
     },

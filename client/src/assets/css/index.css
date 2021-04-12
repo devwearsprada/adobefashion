@@ -47,12 +47,28 @@
     overflow-wrap: word-break;
   }
 
+  h3 {
+    @apply font-swiss-black text-2xl;
+  }
+
   button {
     @apply focus:outline-none;
   }
 
   strong {
     @apply font-normal text-secondary;
+  }
+
+  a {
+    @apply text-secondary;
+  }
+
+  a:hover {
+    @apply border-b-2 border-secondary;
+  }
+
+  button a {
+    @apply text-black;
   }
 
   article p {

@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import store from '@/store'
+
 export default {
   name: 'Thesis',
   metaInfo() {
@@ -37,6 +39,10 @@ export default {
   mounted() {
     // Initialize intersection observer
     this.initIntersectionObserver()
+  },
+  async beforeRouteEnter(to, from, next) {
+    await store.dispatch('calculateInView', null)
+    next()
   },
   computed: {
     thesis() {

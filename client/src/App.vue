@@ -1,6 +1,12 @@
 <template>
   <div id="adobefashion">
     <transition-fade>
+      <preloader 
+        v-show="!loaded"
+      />
+    </transition-fade>
+
+    <transition-fade>
       <blur-overlay
         @click.native="editor = !editor"
         v-if="inView && editor"
@@ -42,7 +48,7 @@ export default {
     ]
   },
   components: {
-    // Preloader: () => import(/* webpackChunkName: "preloader" */ '@/components/preloader.vue'),
+    Preloader: () => import(/* webpackChunkName: "preloader" */ '@/components/preloader.vue'),
     BlurOverlay: () => import(/* webpackChunkName: "sections" */ '@/components/blur-overlay.vue'),
     Navigation: () => import(/* webpackChunkName: "navigation" */ '@/components/navigation.vue'),
     TransitionFade: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-fade.vue'),
@@ -56,6 +62,40 @@ export default {
     }
   },
   created() {
+    console.group(
+			"%cDesign & development by:",
+			"background: linear-gradient(90deg, rgba(188,191,212,1) 0%, rgba(228,253,65,1) 100%); color: #000000 ; font-weight: bold; padding: 4px ;"
+		);
+		console.log(
+      "%cArthur Boer &",
+      "background: linear-gradient(90deg, rgba(188,191,212,1) 0%, rgba(228,253,65,1) 100%); color: #000000 ; padding: 4px ;"
+    );
+		console.log(
+      "%cBoris Smeenk",
+      "background: linear-gradient(90deg, rgba(188,191,212,1) 0%, rgba(228,253,65,1) 100%); color: #000000 ; padding: 4px ;"
+    );
+		console.groupEnd();
+
+    console.log(`%c
+_░▒███████
+░██▓▒░░▒▓██
+██▓▒░__░▒▓██___██████
+██▓▒░____░▓███▓__░▒▓██
+██▓▒░___░▓██▓_____░▒▓██
+██▓▒░_______________░▒▓██
+_██▓▒░______________░▒▓██
+__██▓▒░____________░▒▓██
+___██▓▒░__________░▒▓██
+____██▓▒░________░▒▓██
+_____██▓▒░_____░▒▓██
+______██▓▒░__░▒▓██
+_______█▓▒░░▒▓██
+_________░▒▓██
+_______░▒▓██
+_____░▒▓██
+    
+    `, "font-family:monospace")
+
     // Get thesis
     this.$store.dispatch('fetchThesis')
     // Get originals

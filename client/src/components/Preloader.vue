@@ -1,6 +1,9 @@
 <template>
   <div class="fixed flex h-screen w-screen justify-center items-center bg-primary z-50">
-    <h1 class="text-4xl md:text-8xl">Adobefashion</h1>
+    <img 
+      class="w-1/4 md:w-2/12 lg:w-1/12 animate-spin-slow filter-shadow" 
+      src="@/assets/images/loader.svg"
+    />
   </div>
 </template>
 
