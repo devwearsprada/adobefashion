@@ -7,12 +7,12 @@ const routes = [
   {
     path: '/',
     name: 'Thesis',
-    component: () => import(/* webpackChunkName: "Pages" */ '@/views/Thesis.vue')
+    component: () => import(/* webpackChunkName: "pages" */ '@/views/Thesis.vue')
   },
   {
     path: '/archive',
     name: 'Archive',
-    component: () => import(/* webpackChunkName: "Pages" */ '@/views/Archive.vue')
+    component: () => import(/* webpackChunkName: "pages" */ '@/views/Archive.vue')
   },
 ]
 

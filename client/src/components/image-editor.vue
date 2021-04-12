@@ -23,7 +23,7 @@
           <transition-fade>
             <div
               v-if="instructions"
-              class="absolute z-10 px-2 flex w-full h-full bg-secondary select-none overflow-scroll"
+              class="absolute z-10 px-2 flex w-full h-full bg-secondary select-none overflow-x-scroll"
             > 
               Dear Visitor,
               <br/><br/>
@@ -140,10 +140,10 @@ export default {
     }
   },
   components: {
-    ImageWarp: () => import(/* webpackChunkName: "Images" */ '@/components/image-warp.vue'),
-    ImageLazy: () => import(/* webpackChunkName: "Images" */ '@/components/image-lazy.vue'),
-    TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-expand.vue'),
-    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-fade.vue')
+    ImageWarp: () => import(/* webpackChunkName: "images" */ '@/components/image-warp.vue'),
+    ImageLazy: () => import(/* webpackChunkName: "images" */ '@/components/image-lazy.vue'),
+    TransitionExpand: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-expand.vue'),
+    TransitionFade: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-fade.vue')
 },
   data() {
     return {

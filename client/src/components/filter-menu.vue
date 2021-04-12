@@ -63,7 +63,7 @@
 export default {
   name: 'FilterMenu',
   components: { 
-    TransitionExpand: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-expand.vue')
+    TransitionExpand: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-expand.vue')
   },
   data: () => ({
     expanded: false

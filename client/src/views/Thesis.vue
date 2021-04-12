@@ -23,9 +23,9 @@ export default {
     }
   },
   components: { 
-    'sections.anchor-look': () => import(/* webpackChunkName: "Sections" */ '@/components/sections/anchor-look-section.vue'),
-    'sections.anchor': () => import(/* webpackChunkName: "Sections" */ '@/components/sections/anchor-section.vue'),
-    Colophon: () => import(/* webpackChunkName: "Sections" */ '@/components/sections/colophon.vue')
+    'sections.anchor-look': () => import(/* webpackChunkName: "sections" */ '@/components/sections/anchor-look-section.vue'),
+    'sections.anchor': () => import(/* webpackChunkName: "sections" */ '@/components/sections/anchor-section.vue'),
+    Colophon: () => import(/* webpackChunkName: "sections" */ '@/components/sections/colophon.vue')
   },
   data() {
     return {

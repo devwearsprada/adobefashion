@@ -41,8 +41,8 @@ import breakpoints from '@/plugins/breakpoints'
 export default {
   name: 'Navigation',
   components: {
-    FilterMenu: () => import(/* webpackChunkName: "Navigation" */ '@/components/filter-menu.vue'),
-    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-fade.vue')
+    FilterMenu: () => import(/* webpackChunkName: "navigation" */ '@/components/filter-menu.vue'),
+    TransitionFade: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-fade.vue')
   },
   data() {
     return {

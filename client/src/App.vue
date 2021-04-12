@@ -42,13 +42,13 @@ export default {
     ]
   },
   components: {
-    // Preloader: () => import(/* webpackChunkName: "Preloader" */ '@/components/preloader.vue'),
-    BlurOverlay: () => import(/* webpackChunkName: "Sections" */ '@/components/blur-overlay.vue'),
-    Navigation: () => import(/* webpackChunkName: "Navigation" */ '@/components/navigation.vue'),
-    TransitionFade: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-fade.vue'),
-    TransitionView: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-view.vue'),
-    TransitionImageEditor: () => import(/* webpackChunkName: "Transitions" */ '@/components/transitions/transition-image-editor.vue'),
-    ImageEditor: () => import(/* webpackChunkName: "Images" */ '@/components/image-editor.vue'),
+    // Preloader: () => import(/* webpackChunkName: "preloader" */ '@/components/preloader.vue'),
+    BlurOverlay: () => import(/* webpackChunkName: "sections" */ '@/components/blur-overlay.vue'),
+    Navigation: () => import(/* webpackChunkName: "navigation" */ '@/components/navigation.vue'),
+    TransitionFade: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-fade.vue'),
+    TransitionView: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-view.vue'),
+    TransitionImageEditor: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-image-editor.vue'),
+    ImageEditor: () => import(/* webpackChunkName: "images" */ '@/components/image-editor.vue'),
   },
   data() {
     return {

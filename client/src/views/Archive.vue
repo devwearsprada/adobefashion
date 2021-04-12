@@ -57,8 +57,8 @@
 export default {
   name: 'Archive',
   components: {
-    InfiniteLoading: () =>  import(/* webpackChunkName: "Components" */ 'vue-infinite-loading'),
-    ImageLazy: () => import(/* webpackChunkName: "Images" */ '@/components/image-lazy.vue')
+    InfiniteLoading: () =>  import(/* webpackChunkName: "components" */ 'vue-infinite-loading'),
+    ImageLazy: () => import(/* webpackChunkName: "images" */ '@/components/image-lazy.vue')
   },
   metaInfo() {
     return {
