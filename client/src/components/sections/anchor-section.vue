@@ -11,7 +11,7 @@
     <aside 
       class="order-1 lg:order-none lg:col-span-1"
     >
-      <h1 class="font-hadogenes-regular text-4xl text-center">
+      <h1 class="font-hadogenes-regular text-3xl md:text-4xl text-center md:py-8">
         {{ data.title }}
       </h1>
     </aside>

@@ -96,6 +96,6 @@
   }
 
   div.container section:first-child article h2 {
-    @apply font-swiss-black text-2xl lg:text-4xl;
+    @apply font-swiss-black text-3xl lg:text-5xl;
   }
 }
