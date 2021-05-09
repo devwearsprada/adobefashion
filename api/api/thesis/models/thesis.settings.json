@@ -16,7 +16,9 @@
       "components": [
         "sections.section",
         "sections.anchor",
-        "sections.anchor-look"
+        "sections.anchor-look",
+        "sections.footnotes",
+        "sections.look"
       ]
     }
   }

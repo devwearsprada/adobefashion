@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_sections_footnotes",
+  "info": {
+    "name": "Footnotes",
+    "icon": "bookmark",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "footnoteLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.footnote-link",
+      "min": 1,
+      "required": true
+    }
+  }
+}

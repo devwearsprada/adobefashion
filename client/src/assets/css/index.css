@@ -60,7 +60,7 @@
   }
 
   strong {
-    @apply font-normal text-secondary;
+    @apply font-bold;
   }
 
   a {

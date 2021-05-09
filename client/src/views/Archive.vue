@@ -38,6 +38,7 @@
         <h1 class="font-hadogenes-regular uppercase text-xl md:text-2xl pt-2 -ml-1">
           {{ edit.title }}
         </h1>
+        <span>{{ new Date(edit.createdAt) | dateFormat('DD.MM.YYYY') }}</span>
       </div>
       
     </transition-group>

@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_sections_footnote_links",
+  "info": {
+    "name": "FootnoteLink",
+    "icon": "external-link-alt",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "linkText": {
+      "type": "richtext"
+    },
+    "anchor": {
+      "type": "string"
+    }
+  }
+}

@@ -27,6 +27,8 @@ export default {
   components: { 
     'sections.anchor-look': () => import(/* webpackChunkName: "sections" */ '@/components/sections/anchor-look-section.vue'),
     'sections.anchor': () => import(/* webpackChunkName: "sections" */ '@/components/sections/anchor-section.vue'),
+    'sections.look': () => import(/* webpackChunkName: "sections" */ '@/components/sections/look.vue'),
+    'sections.footnotes': () => import(/* webpackChunkName: "sections" */ '@/components/sections/footnotes.vue'),
     Colophon: () => import(/* webpackChunkName: "sections" */ '@/components/sections/colophon.vue')
   },
   data() {
@@ -80,6 +82,10 @@ export default {
           // update route hash
           if (hashedId !== this.$route.hash)
             this.$router.push({ hash: hashedId, params: { scroll: false } })
+        } else {
+          if (entries.length === 1) {
+            this.$store.dispatch('calculateInView', null)
+          }
         }
       }
     },
