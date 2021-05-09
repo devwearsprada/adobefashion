@@ -29,8 +29,16 @@
 </template>
 
 <script>
+const twitterImage = require('@/assets/images/twitter-card.jpg')
+const ogImage = require('@/assets/images/og-image.jpg')
+
 export default {
   name: 'App',
+  data() {
+    return {
+      editor: false,
+    }
+  },
   metaInfo: {
     titleTemplate: (titleChunk) => {
       return titleChunk 
@@ -63,11 +71,11 @@ export default {
       {
         hid: "og:image",
         property: "og:image",
-        content: require('@/assets/images/banner.jpg')
+        content: process.env.VUE_APP_API_URL + twitterImage
       },
       { property: "og:image:width", content: "1920" },
       { property: "og:image:height", content: "880" },
-      { name: "twitter:site", content: "@bobross" },
+      { name: "twitter:site", content: "adobefashion" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         hid: "twitter:url",
@@ -87,7 +95,7 @@ export default {
       {
         hid: "twitter:image",
         name: "twitter:image",
-        content: require('@/assets/images/banner.jpg')
+        content: process.env.VUE_APP_API_URL + ogImage
       }
     ]
   },
@@ -99,11 +107,6 @@ export default {
     TransitionView: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-view.vue'),
     TransitionImageEditor: () => import(/* webpackChunkName: "transitions" */ '@/components/transitions/transition-image-editor.vue'),
     ImageEditor: () => import(/* webpackChunkName: "images" */ '@/components/image-editor.vue'),
-  },
-  data() {
-    return {
-      editor: false,
-    }
   },
   created() {
     console.group(

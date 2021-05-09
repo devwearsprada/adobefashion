@@ -26,7 +26,7 @@
         {{ data.title }}
       </span>
       <transition-fade :duration="{ enter: 100, leave: 100 }"> 
-        <div v-if="expand" class="absolute z-10 filter-shadow" :style="hoverStyle">
+        <div v-show="expand" class="absolute z-10 filter-shadow" :style="hoverStyle">
           <image-lazy
             :width="data.image.width / 8"
             :height="data.image.height / 8"
@@ -71,7 +71,6 @@ export default {
         top: `${e.pageY + 16}px`
       }
 
-      console.log(this.hoverStyle)
     }
   }
 }

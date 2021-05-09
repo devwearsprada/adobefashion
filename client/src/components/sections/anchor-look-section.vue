@@ -6,6 +6,7 @@
     :id="data.slug"
   >
     <article
+      ref="article"
       class="order-2 lg:order-none lg:col-span-2" 
       v-html="data.content"
     />

@@ -55,6 +55,7 @@ module.exports = {
     isolation: ['responsive'],
     extend: {
       margin: ['hover'],
+      padding: ['first'],
       transitionProperty: ['hover']
     },
   },

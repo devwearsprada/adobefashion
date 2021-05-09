@@ -10,7 +10,7 @@
         v-html="colophon.content"
       />
       <div
-        class="flex flex-row space-x-4 pt-6"
+        class="flex flex-row space-x-4 pt-2"
       >
       <div
         class="flex items-end"
@@ -18,7 +18,7 @@
         :key="i"
       >
         <img
-          class="w-24"
+          class="w-16"
           :src="api + logo.image.url"
         />
       </div>

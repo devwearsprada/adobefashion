@@ -1,6 +1,7 @@
 <template>
-  <ul class="text-xs pt-4">
+  <ul class="text-xs">
     <li
+      class="first:pt-4"
       v-for="(footnote, i) in data.footnoteLinks"
       :key="i"
       :id="footnote.anchor"
