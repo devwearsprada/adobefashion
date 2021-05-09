@@ -1,7 +1,7 @@
 <template>
-  <nav class="sticky top-0 flex p-4 space-x-4 w-full z-30 filter-shadow">
+  <nav class="sticky w-auto top-0 inline-flex p-4 space-x-4 z-30 filter-shadow">
     <div 
-      class="rounded-xl transition-all duration-300 w-1/12 min-w-max"
+      class="rounded-xl transition-all duration-300"
       :class="shadowClass"
     >
       <div 
@@ -14,7 +14,7 @@
         v-slot="{ navigate }"
       >
         <button
-          class="transition-colors duration-300 ease-in-out px-4 w-full"
+          class="transition-colors duration-300 ease-in-out px-4"
           :class="bgClass"
           @click="navigate"
           role="link"

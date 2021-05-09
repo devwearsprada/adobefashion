@@ -1,6 +1,6 @@
 <template>
   <section
-    class="col-span-3 grid grid-cols-1 lg:grid-cols-3 lg:gap-10 pt-40 pb-20 md:pb-0"
+    class="col-span-3 grid grid-cols-1 lg:grid-cols-3 lg:gap-10 pt-80 pb-20 md:pb-0"
   >
     <article
       class="order-2 lg:order-none lg:col-span-2" 
