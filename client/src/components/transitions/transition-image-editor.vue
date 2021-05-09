@@ -1,7 +1,5 @@
 <template>
-  <transition 
-    name="slide"
-  >
+  <transition name="slide">
     <slot ref="slot" />
   </transition>
 </template>
@@ -20,6 +18,6 @@ export default {
 
 .slide-enter,
 .slide-leave-to {
-  transform: translateY(100%);
+  transform: translateY(105%);
 }
 </style>
